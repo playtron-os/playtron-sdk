@@ -4,6 +4,29 @@ Welcome to the official **Playtron GameOS C# SDK** — a .NET interface for buil
 
 This SDK supports both **Linux** and **Windows (via Wine/Proton)** and includes full examples for attestation, web3 signing, and more.
 
+## Table of Contents
+
+1. [Playtron GameOS C# SDK](#playtron-gameos-c-sdk)
+2. [Features](#features)
+3. [Requirements](#requirements)
+    - [Linux](#linux)
+    - [Windows](#windows)
+4. [Installation](#installation)
+    - [Linux](#linux-1)
+    - [Windows](#windows-1)
+5. [Building and Running](#building-and-running)
+    - [Attestation](#attestation)
+        - [Linux](#linux-2)
+        - [Windows](#windows-2)
+    - [Web3](#web3)
+        - [Linux](#linux-3)
+        - [Windows](#windows-3)
+6. [API Reference (C#)](#-api-reference-c)
+    - [Playtron.SDK.OS](#-playtronsdkos)
+    - [Playtron.SDK.PACT.AttestationClient](#-playtronsdkpactattestationclient)
+    - [Playtron.SDK.Web3](#-playtronsdkweb3)
+7. [Exceptions](#-exceptions)
+
 ---
 
 ## Features

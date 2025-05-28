@@ -4,6 +4,31 @@ Welcome to the official **Playtron GameOS Node.js SDK** — a JavaScript/TypeScr
 
 This SDK is designed for **Node.js apps running on GameOS** and includes TypeScript-compatible classes with async methods.
 
+## Table of Contents
+
+1. [Playtron GameOS Node.js SDK](#playtron-gameos-nodejs-sdk)
+2. [Features](#features)
+3. [Requirements](#requirements)
+4. [Installation](#installation)
+5. [Building and Testing Examples](#building-and-testing-examples)
+    - [Attestation](#attestation)
+        - [Linux](#linux)
+        - [Windows](#windows)
+    - [Web3 Address](#web3-address)
+        - [Linux](#linux-1)
+        - [Windows](#windows-1)
+    - [Web3 Sign Message](#web3-sign-message)
+        - [Linux](#linux-2)
+        - [Windows](#windows-2)
+    - [Web3 Sign and Execute Transaction](#web3-sign-and-execute-transaction)
+        - [Linux](#linux-3)
+        - [Windows](#windows-3)
+6. [API Reference](#api-reference)
+    - [class OS](#class-os)
+    - [class AttestationClient](#class-attestationclient)
+    - [class Web3](#class-web3)
+7. [Types](#types)
+
 ---
 
 ## Features
