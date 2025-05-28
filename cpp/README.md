@@ -2,7 +2,7 @@
 
 Welcome to the official **Playtron GameOS C++ SDK** — a native C++ interface for building applications that integrate with the Playtron runtime.
 
-This SDK supports both **Linux** and **Windows (via Wine/Proton)** and includes full examples for attestation, sui signing, and more.
+This SDK supports both **Linux** and **Windows (via Wine/Proton)** and includes full examples for PACT attestation, sui signing, and more.
 
 ## Table of Contents
 
@@ -10,11 +10,11 @@ This SDK supports both **Linux** and **Windows (via Wine/Proton)** and includes 
 - [Requirements for Examples](#requirements-for-examples)
 - [SDK Installation](#sdk-installation)
 - [Examples](#examples)
-  - [Attestation](#attestation)
+  - [PACT Attestation](#attestation)
   - [Sui](#sui)
 - [Building and Testing Examples](#building-and-testing-examples)
-  - [Attestation - Linux](#linux-1)
-  - [Attestation - Windows](#windows-1)
+  - [PACT Attestation - Linux](#linux-1)
+  - [PACT Attestation - Windows](#windows-1)
   - [Sui - Linux](#linux-2)
   - [Sui - Windows](#windows-2)
 - [API Reference](#-api-reference)
@@ -25,7 +25,7 @@ This SDK supports both **Linux** and **Windows (via Wine/Proton)** and includes 
 
 ## Features
 
-- Remote attestation via TPM
+- Remote PACT attestation via TPM
 - Message signing and transaction execution
 - Cross-platform support (Linux + Wine/Proton on Windows)
 - Clean, minimal examples in C++
@@ -70,7 +70,7 @@ All examples will only function properly in GameOS where the libraries and dlls 
 IMPORTANT: These examples will only work on GameOS Beta 1.1 version and up!
 IMPORTANT 2: The wallet UI to approve/reject transactions might not be released with Beta 1.1 and come with a later version, thus making sui examples not fully testable.
 
-### Attestation
+### PACT Attestation
 
 #### Linux
 

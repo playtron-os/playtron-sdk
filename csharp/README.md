@@ -2,7 +2,7 @@
 
 Welcome to the official **Playtron GameOS C# SDK** — a .NET interface for building applications that integrate with the Playtron runtime.
 
-This SDK supports both **Linux** and **Windows (via Wine/Proton)** and includes full examples for attestation, sui signing, and more.
+This SDK supports both **Linux** and **Windows (via Wine/Proton)** and includes full examples for PACT attestation, sui signing, and more.
 
 ## Table of Contents
 
@@ -15,7 +15,7 @@ This SDK supports both **Linux** and **Windows (via Wine/Proton)** and includes 
     - [Linux](#linux-1)
     - [Windows](#windows-1)
 5. [Building and Running](#building-and-running)
-    - [Attestation](#attestation)
+    - [PACT Attestation](#attestation)
         - [Linux](#linux-2)
         - [Windows](#windows-2)
     - [Sui](#sui)

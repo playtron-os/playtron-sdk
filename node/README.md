@@ -1,6 +1,6 @@
 # Playtron GameOS Node.js SDK
 
-Welcome to the official **Playtron GameOS Node.js SDK** — a JavaScript/TypeScript interface for integrating applications with the Playtron runtime. It provides access to platform-level features like remote attestation and Sui wallet functions, via native bindings.
+Welcome to the official **Playtron GameOS Node.js SDK** — a JavaScript/TypeScript interface for integrating applications with the Playtron runtime. It provides access to platform-level features like remote PACT attestation and Sui wallet functions, via native bindings.
 
 This SDK is designed for **Node.js apps running on GameOS** and includes TypeScript-compatible classes with async methods.
 
@@ -11,7 +11,7 @@ This SDK is designed for **Node.js apps running on GameOS** and includes TypeScr
 3. [Requirements](#requirements)
 4. [Installation](#installation)
 5. [Building and Testing Examples](#building-and-testing-examples)
-    - [Attestation](#attestation)
+    - [PACT Attestation](#attestation)
         - [Linux](#linux)
         - [Windows](#windows)
     - [Sui Address](#sui-address)
