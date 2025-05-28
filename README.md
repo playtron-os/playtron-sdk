@@ -2,7 +2,7 @@
 
 This repository contains multiple SDKs for interfacing with **Playtron GameOS** across different languages.
 
-Each SDK provides access to platform-level features such as environment detection, remote attestation, and Web3 wallet integration.
+Each SDK provides access to platform-level features such as environment detection, remote attestation, and Sui wallet integration.
 
 ---
 

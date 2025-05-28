@@ -2,7 +2,7 @@
 
 Welcome to the official **Playtron GameOS C++ SDK** — a native C++ interface for building applications that integrate with the Playtron runtime.
 
-This SDK supports both **Linux** and **Windows (via Wine/Proton)** and includes full examples for attestation, web3 signing, and more.
+This SDK supports both **Linux** and **Windows (via Wine/Proton)** and includes full examples for attestation, sui signing, and more.
 
 ## Table of Contents
 
@@ -11,12 +11,12 @@ This SDK supports both **Linux** and **Windows (via Wine/Proton)** and includes 
 - [SDK Installation](#sdk-installation)
 - [Examples](#examples)
   - [Attestation](#attestation)
-  - [Web3](#web3)
+  - [Sui](#sui)
 - [Building and Testing Examples](#building-and-testing-examples)
   - [Attestation - Linux](#linux-1)
   - [Attestation - Windows](#windows-1)
-  - [Web3 - Linux](#linux-2)
-  - [Web3 - Windows](#windows-2)
+  - [Sui - Linux](#linux-2)
+  - [Sui - Windows](#windows-2)
 - [API Reference](#-api-reference)
 - [Exceptions](#-exceptions)
 - [License](#license)
@@ -68,7 +68,7 @@ To use the SDK, follow these steps:
 All examples will only function properly in GameOS where the libraries and dlls are provided.
 
 IMPORTANT: These examples will only work on GameOS Beta 1.1 version and up!
-IMPORTANT 2: The wallet UI to approve/reject transactions might not be released with Beta 1.1 and come with a later version, thus making web3 examples not fully testable.
+IMPORTANT 2: The wallet UI to approve/reject transactions might not be released with Beta 1.1 and come with a later version, thus making sui examples not fully testable.
 
 ### Attestation
 
@@ -132,7 +132,7 @@ cp /usr/share/playtron/pact.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
 PACT_ATTESTATION_URL=https://pact.playtron.one LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ./attestation.exe
 ```
 
-### Web3
+### Sui
 
 #### Linux
 
@@ -142,14 +142,14 @@ export IP_ADDRESS=DEVICE_IP
 ```
 - Build, copy files to device and SSH into device:
 ```bash
-make examples-web3-linux-x64
+make examples-sui-linux-x64
 scp -r ./build/linux-x64/bin/* playtron@$IP_ADDRESS:/home/playtron/cpp-linux
 ssh playtron@$IP_ADDRESS
 cd cpp-linux
 ```
 - Run (In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app):
 ```bash
-LD_LIBRARY_PATH=.:/usr/lib64 ./web3
+LD_LIBRARY_PATH=.:/usr/lib64 ./sui
 ```
 
 #### Windows
@@ -160,7 +160,7 @@ export IP_ADDRESS=DEVICE_IP
 ```
 - Build, copy files to device and SSH into device:
 ```bash
-make examples-web3-win-x64
+make examples-sui-win-x64
 scp -r ./build/win-x64/bin/* playtron@$IP_ADDRESS:/home/playtron/cpp-win
 ssh playtron@$IP_ADDRESS
 cd cpp-win
@@ -191,14 +191,14 @@ cp /usr/share/playtron/pact.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
 ```
 - Run (In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app):
 ```bash
-LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ./web3.exe
+LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ./sui.exe
 ```
 
 ---
 
 ## 🧩 API Reference
 
-The Playtron C++ SDK provides convenient access to core GameOS platform services such as OS checks, remote attestation, and blockchain signing via Web3.
+The Playtron C++ SDK provides convenient access to core GameOS platform services such as OS checks, remote attestation, and blockchain signing via Sui.
 
 ---
 
@@ -254,16 +254,16 @@ Thrown if the attestation process fails at any stage.
 
 ---
 
-### `playtron::sdk::web3`
+### `playtron::sdk::sui`
 
-Provides Web3 functionality integrated with the user's Playtron wallet.
+Provides Sui functionality integrated with the user's Playtron wallet.
 
 #### `std::string get_wallet_address()`
 
 Returns the Sui wallet address for the currently logged-in user.
 
 ```cpp
-std::string address = playtron::sdk::web3::get_wallet_address();
+std::string address = playtron::sdk::sui::get_wallet_address();
 std::cout << "User wallet address: " << address << std::endl;
 ```
 
@@ -274,8 +274,8 @@ std::cout << "User wallet address: " << address << std::endl;
 Requests the user to sign an arbitrary message through the Playtron wallet UI.
 
 ```cpp
-playtron::sdk::web3::MessageResult result =
-    playtron::sdk::web3::sign_message("123", "Hello from my game!");
+playtron::sdk::sui::MessageResult result =
+    playtron::sdk::sui::sign_message("123", "Hello from my game!");
 
 if (result.cancelled) {
     std::cerr << "User cancelled signing." << std::endl;
@@ -293,8 +293,8 @@ if (result.cancelled) {
 Requests the user to sign and submit a Sui transaction. The transaction must be passed as a base64-encoded BCS payload.
 
 ```cpp
-playtron::sdk::web3::TransactionResult tx =
-    playtron::sdk::web3::sign_and_execute_transaction("123", base64_tx);
+playtron::sdk::sui::TransactionResult tx =
+    playtron::sdk::sui::sign_and_execute_transaction("123", base64_tx);
 
 if (tx.cancelled) {
     std::cerr << "User cancelled transaction." << std::endl;

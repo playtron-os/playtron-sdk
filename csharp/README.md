@@ -2,7 +2,7 @@
 
 Welcome to the official **Playtron GameOS C# SDK** — a .NET interface for building applications that integrate with the Playtron runtime.
 
-This SDK supports both **Linux** and **Windows (via Wine/Proton)** and includes full examples for attestation, web3 signing, and more.
+This SDK supports both **Linux** and **Windows (via Wine/Proton)** and includes full examples for attestation, sui signing, and more.
 
 ## Table of Contents
 
@@ -18,13 +18,13 @@ This SDK supports both **Linux** and **Windows (via Wine/Proton)** and includes 
     - [Attestation](#attestation)
         - [Linux](#linux-2)
         - [Windows](#windows-2)
-    - [Web3](#web3)
+    - [Sui](#sui)
         - [Linux](#linux-3)
         - [Windows](#windows-3)
 6. [API Reference (C#)](#-api-reference-c)
     - [Playtron.SDK.OS](#-playtronsdkos)
     - [Playtron.SDK.PACT.AttestationClient](#-playtronsdkpactattestationclient)
-    - [Playtron.SDK.Web3](#-playtronsdkweb3)
+    - [Playtron.SDK.Sui](#-playtronsdksui)
 7. [Exceptions](#-exceptions)
 
 ---
@@ -77,7 +77,7 @@ dotnet add package Playtron.SDK
 All examples will only function properly in GameOS where the libraries and dlls are provided.
 
 IMPORTANT: These examples will only work on GameOS Beta 1.1 version and up!
-IMPORTANT 2: The wallet UI to approve/reject transactions might not be released with Beta 1.1 and come with a later version, thus making web3 examples not fully testable.
+IMPORTANT 2: The wallet UI to approve/reject transactions might not be released with Beta 1.1 and come with a later version, thus making sui examples not fully testable.
 
 ### Attestation
 
@@ -155,7 +155,7 @@ cp /usr/share/playtron/pact.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
 PACT_ATTESTATION_URL=https://pact.playtron.one LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ./Attestation.exe
 ```
 
-### Web3
+### Sui
 
 #### Linux
 
@@ -165,7 +165,7 @@ export IP_ADDRESS=DEVICE_IP
 ```
 - Build Example
 ```bash
-cd Examples/Web3
+cd Examples/Sui
 dotnet build \
     --runtime linux-x64 \
     -c Release \
@@ -179,7 +179,7 @@ cd csharp-linux
 ```
 - Run (In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app):
 ```bash
-LD_LIBRARY_PATH=.:/usr/lib64 ./Web3
+LD_LIBRARY_PATH=.:/usr/lib64 ./Sui
 ```
 
 #### Windows
@@ -190,7 +190,7 @@ export IP_ADDRESS=DEVICE_IP
 ```
 - Build Example
 ```bash
-cd Examples/Web3
+cd Examples/Sui
 dotnet build \
     --runtime win-x64 \
     -c Release \
@@ -228,14 +228,14 @@ cp /usr/share/playtron/pact.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
 ```
 - Run (In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app):
 ```bash
-LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ./Web3.exe
+LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ./Sui.exe
 ```
 
 ---
 
 ## 🧩 API Reference (C#)
 
-The Playtron SDK provides convenient access to GameOS platform features including environment detection, TPM-based remote attestation, and wallet-based Web3 interactions.
+The Playtron SDK provides convenient access to GameOS platform features including environment detection, TPM-based remote attestation, and wallet-based Sui interactions.
 
 ---
 
@@ -290,25 +290,25 @@ Thrown when initialization, session setup, or quote generation fails.
 
 ---
 
-### 🌐 `Playtron.SDK.Web3`
+### 🌐 `Playtron.SDK.Sui`
 
-Interfaces with the user’s Playtron wallet for Web3-related functionality.
+Interfaces with the user’s Playtron wallet for Sui-related functionality.
 
-#### `string Web3.GetWalletAddress()`
+#### `string Sui.GetWalletAddress()`
 
 Returns the user’s current Sui wallet address.
 
 ```csharp
-string address = Web3.GetWalletAddress();
+string address = Sui.GetWalletAddress();
 Console.WriteLine($"Wallet address: {address}");
 ```
 
-#### `MessageResult Web3.SignMessage(string providerAppId, string message)`
+#### `MessageResult Sui.SignMessage(string providerAppId, string message)`
 
 Requests the user to sign a message through their wallet UI.
 
 ```csharp
-var result = Web3.SignMessage("123", "Hello!");
+var result = Sui.SignMessage("123", "Hello!");
 
 if (result.Cancelled)
     Console.WriteLine("User cancelled.");
@@ -318,12 +318,12 @@ else
     Console.WriteLine($"Signature: {result.Signature}");
 ```
 
-#### `TransactionResult Web3.SignAndExecuteTransaction(string providerAppId, string txBytes)`
+#### `TransactionResult Sui.SignAndExecuteTransaction(string providerAppId, string txBytes)`
 
 Signs and submits a base64-encoded Sui transaction via the Playtron wallet.
 
 ```csharp
-var txResult = Web3.SignAndExecuteTransaction("123", base64Tx);
+var txResult = Sui.SignAndExecuteTransaction("123", base64Tx);
 
 if (txResult.Cancelled)
     Console.WriteLine("Transaction cancelled.");
