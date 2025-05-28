@@ -1,0 +1,28 @@
+{
+  "name": "examples",
+  "version": "1.0.0",
+  "description": "Example usage for playtron-sdk",
+  "main": "index.js",
+  "scripts": {
+    "build": "ncc build src/$BUILD_FILE.ts -o dist",
+    "attestation": "ts-node src/attestation.ts",
+    "is-playtron": "ts-node src/is-playtron.ts",
+    "web3-address": "ts-node src/web3-address.ts",
+    "web3-sign-message": "ts-node src/web3-sign-message.ts",
+    "web3-sign-transaction": "ts-node src/web3-sign-transaction.ts"
+  },
+  "dependencies": {
+    "@mysten/sui": "^1.30.1",
+    "axios": "^1.9.0",
+    "@playtron/sdk": "^1.0.3"
+  },
+  "author": "ericky@playtron.one",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "@vercel/ncc": "^0.38.3",
+    "esbuild": "^0.25.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
