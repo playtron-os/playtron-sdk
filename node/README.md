@@ -68,44 +68,61 @@ IMPORTANT 2: The wallet UI to approve/reject transactions might not be released 
 
 #### Linux
 
-- `export IP_ADDRESS=DEVICE_IP`
-    - `DEVICE_IP` above represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address
+- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
+```bash
+export IP_ADDRESS=DEVICE_IP
+```
 - Build the example:
 ```bash
 cd ./examples
 pnpm install
 BUILD_FILE=attestation pnpm build
 ```
-- `scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-linux`
+- Copy built code to device:
+```bash
+scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-linux
+```
 - Download the linux node standalone binary from here: https://nodejs.org/en/download
 - Copy the node binary to the target device:
 ```bash
 scp -r ~/Downloads/node-v22.16.0-linux-x64/bin/node playtron@$IP_ADDRESS:/home/playtron/node
 ```
-- `ssh playtron@$IP_ADDRESS`
-- `cd node-linux`
-- `PACT_ATTESTATION_URL=https://pact.playtron.one LD_LIBRARY_PATH=.:/usr/lib64 ~/node ./index`
-    - In a live app, the `PACT_ATTESTATION_URL` and `LD_LIBRARY_PATH` variables will be provided when executing the app.
+```bash
+ssh playtron@$IP_ADDRESS
+cd node-linux
+```
+- Run (In a live app, the `PACT_ATTESTATION_URL` and `LD_LIBRARY_PATH` variables will be provided when executing the app):
+```bash
+PACT_ATTESTATION_URL=https://pact.playtron.one LD_LIBRARY_PATH=.:/usr/lib64 ~/node ./index
+```
 
 #### Windows
 
-- `export IP_ADDRESS=DEVICE_IP`
-    - `DEVICE_IP` above represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address
+- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
+```bash
+export IP_ADDRESS=DEVICE_IP
+```
 - Build the example:
 ```bash
 cd ./examples
 pnpm install
 BUILD_FILE=attestation pnpm build
 ```
-- `scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-win`
+- Copy built code to device:
+```bash
+scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-win
+```
 - Download the windows node zip from here: https://nodejs.org/dist/v22.16.0/node-v22.16.0-win-x64.zip
 - Copy the node zip to the target device:
 ```bash
 scp -r ~/Downloads/node-v22.16.0-win-x64.zip playtron@$IP_ADDRESS:/home/playtron
 ```
-- `ssh playtron@$IP_ADDRESS`
-- `unzip node-v22.16.0-win-x64.zip`
-- `cd node-win`
+- Ssh into the device and unzip node:
+```bash
+ssh playtron@$IP_ADDRESS
+unzip node-v22.16.0-win-x64.zip
+cd node-win
+```
 - Export variables
 ```bash
 export WINE_PREFIX=$(pwd)/wine_prefix
@@ -130,51 +147,70 @@ cp /usr/share/playtron/pact.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
 # This is copying the pact.dll to your wine prefix.
 # This will already be done for you when executing the app via GameOS.
 ```
-- `PACT_ATTESTATION_URL=https://pact.playtron.one LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ~/node-v22.16.0-win-x64/node.exe ./index`
-    - In a live app, the `PACT_ATTESTATION_URL` and `LD_LIBRARY_PATH` variables will be provided when executing the app.
+- Run (In a live app, the `PACT_ATTESTATION_URL` and `LD_LIBRARY_PATH` variables will be provided when executing the app):
+```bash
+PACT_ATTESTATION_URL=https://pact.playtron.one LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ~/node-v22.16.0-win-x64/node.exe ./index
+```
 
 ### Web3 Address
 
 #### Linux
 
-- `export IP_ADDRESS=DEVICE_IP`
-    - `DEVICE_IP` above represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address
+- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
+```bash
+export IP_ADDRESS=DEVICE_IP
+```
 - Build the example:
 ```bash
 cd ./examples
 pnpm install
 BUILD_FILE=web3-address pnpm build
 ```
-- `scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-linux`
+- Copy built code to device:
+```bash
+scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-linux
+```
 - Download the linux node standalone binary from here: https://nodejs.org/en/download
 - Copy the node binary to the target device:
 ```bash
 scp -r ~/Downloads/node-v22.16.0-linux-x64/bin/node playtron@$IP_ADDRESS:/home/playtron/node
 ```
-- `ssh playtron@$IP_ADDRESS`
-- `cd node-linux`
-- `LD_LIBRARY_PATH=.:/usr/lib64 ~/node ./index`
-    - In a live app, the `LD_LIBRARY_PATH` variables will be provided when executing the app.
+```bash
+ssh playtron@$IP_ADDRESS
+cd node-linux
+```
+- Run (In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app.):
+```bash
+LD_LIBRARY_PATH=.:/usr/lib64 ~/node ./index
+```
 
 #### Windows
 
-- `export IP_ADDRESS=DEVICE_IP`
-    - `DEVICE_IP` above represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address
+- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
+```bash
+export IP_ADDRESS=DEVICE_IP
+```
 - Build the example:
 ```bash
 cd ./examples
 pnpm install
 BUILD_FILE=web3-address pnpm build
 ```
-- `scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-win`
+- Copy built code to device:
+```bash
+scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-win
+```
 - Download the windows node zip from here: https://nodejs.org/dist/v22.16.0/node-v22.16.0-win-x64.zip
 - Copy the node zip to the target device:
 ```bash
 scp -r ~/Downloads/node-v22.16.0-win-x64.zip playtron@$IP_ADDRESS:/home/playtron
 ```
-- `ssh playtron@$IP_ADDRESS`
-- `unzip node-v22.16.0-win-x64.zip`
-- `cd node-win`
+- Ssh into the device and unzip node:
+```bash
+ssh playtron@$IP_ADDRESS
+unzip node-v22.16.0-win-x64.zip
+cd node-win
+```
 - Export variables
 ```bash
 export WINE_PREFIX=$(pwd)/wine_prefix
@@ -199,51 +235,71 @@ cp /usr/share/playtron/pact.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
 # This is copying the pact.dll to your wine prefix.
 # This will already be done for you when executing the app via GameOS.
 ```
-- `LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ~/node-v22.16.0-win-x64/node.exe ./index`
-    - In a live app, the `LD_LIBRARY_PATH` variables will be provided when executing the app.
+- Run (In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app):
+```bash
+LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ~/node-v22.16.0-win-x64/node.exe ./index
+```
 
 ### Web3 Sign Message
 
 #### Linux
 
-- `export IP_ADDRESS=DEVICE_IP`
-    - `DEVICE_IP` above represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address
+- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
+```bash
+export IP_ADDRESS=DEVICE_IP
+```
 - Build the example:
 ```bash
 cd ./examples
 pnpm install
 BUILD_FILE=web3-sign-message pnpm build
 ```
-- `scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-linux`
+- Copy built code to device:
+```bash
+scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-linux
+```
 - Download the linux node standalone binary from here: https://nodejs.org/en/download
 - Copy the node binary to the target device:
 ```bash
 scp -r ~/Downloads/node-v22.16.0-linux-x64/bin/node playtron@$IP_ADDRESS:/home/playtron/node
 ```
-- `ssh playtron@$IP_ADDRESS`
-- `cd node-linux`
-- `LD_LIBRARY_PATH=.:/usr/lib64 ~/node ./index`
-    - In a live app, the `LD_LIBRARY_PATH` variables will be provided when executing the app.
+- Ssh into the device:
+```bash
+ssh playtron@$IP_ADDRESS
+cd node-linux
+```
+- Run (In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app.):
+```bash
+LD_LIBRARY_PATH=.:/usr/lib64 ~/node ./index
+```
 
 #### Windows
 
-- `export IP_ADDRESS=DEVICE_IP`
-    - `DEVICE_IP` above represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address
+- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
+```bash
+export IP_ADDRESS=DEVICE_IP
+```
 - Build the example:
 ```bash
 cd ./examples
 pnpm install
 BUILD_FILE=web3-sign-message pnpm build
 ```
-- `scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-win`
+- Copy built code to device:
+```bash
+scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-win
+```
 - Download the windows node zip from here: https://nodejs.org/dist/v22.16.0/node-v22.16.0-win-x64.zip
 - Copy the node zip to the target device:
 ```bash
 scp -r ~/Downloads/node-v22.16.0-win-x64.zip playtron@$IP_ADDRESS:/home/playtron
 ```
-- `ssh playtron@$IP_ADDRESS`
-- `unzip node-v22.16.0-win-x64.zip`
-- `cd node-win`
+- Ssh into the device and unzip node:
+```bash
+ssh playtron@$IP_ADDRESS
+unzip node-v22.16.0-win-x64.zip
+cd node-win
+```
 - Export variables
 ```bash
 export WINE_PREFIX=$(pwd)/wine_prefix
@@ -268,51 +324,70 @@ cp /usr/share/playtron/pact.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
 # This is copying the pact.dll to your wine prefix.
 # This will already be done for you when executing the app via GameOS.
 ```
-- `LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ~/node-v22.16.0-win-x64/node.exe ./index`
-    - In a live app, the `LD_LIBRARY_PATH` variables will be provided when executing the app.
+- Run (In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app):
+```bash
+LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ~/node-v22.16.0-win-x64/node.exe ./index
+```
 
 ### Web3 Sign and Execute Transaction
 
 #### Linux
 
-- `export IP_ADDRESS=DEVICE_IP`
-    - `DEVICE_IP` above represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address
+- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
+```bash
+export IP_ADDRESS=DEVICE_IP
+```
 - Build the example:
 ```bash
 cd ./examples
 pnpm install
 BUILD_FILE=web3-sign-and-execute-transaction pnpm build
 ```
-- `scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-linux`
+- Copy built code to device:
+```bash
+scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-linux
+```
 - Download the linux node standalone binary from here: https://nodejs.org/en/download
 - Copy the node binary to the target device:
 ```bash
 scp -r ~/Downloads/node-v22.16.0-linux-x64/bin/node playtron@$IP_ADDRESS:/home/playtron/node
 ```
-- `ssh playtron@$IP_ADDRESS`
-- `cd node-linux`
-- `LD_LIBRARY_PATH=.:/usr/lib64 ~/node ./index`
-    - In a live app, the `LD_LIBRARY_PATH` variables will be provided when executing the app.
+```bash
+ssh playtron@$IP_ADDRESS
+cd node-linux
+```
+- Run (In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app.):
+```bash
+LD_LIBRARY_PATH=.:/usr/lib64 ~/node ./index
+```
 
 #### Windows
 
-- `export IP_ADDRESS=DEVICE_IP`
-    - `DEVICE_IP` above represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address
+- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
+```bash
+export IP_ADDRESS=DEVICE_IP
+```
 - Build the example:
 ```bash
 cd ./examples
 pnpm install
 BUILD_FILE=web3-sign-and-execute-transaction pnpm build
 ```
-- `scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-win`
+- Copy built code to device:
+```bash
+scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-win
+```
 - Download the windows node zip from here: https://nodejs.org/dist/v22.16.0/node-v22.16.0-win-x64.zip
 - Copy the node zip to the target device:
 ```bash
 scp -r ~/Downloads/node-v22.16.0-win-x64.zip playtron@$IP_ADDRESS:/home/playtron
 ```
-- `ssh playtron@$IP_ADDRESS`
-- `unzip node-v22.16.0-win-x64.zip`
-- `cd node-win`
+- Ssh into the device and unzip node:
+```bash
+ssh playtron@$IP_ADDRESS
+unzip node-v22.16.0-win-x64.zip
+cd node-win
+```
 - Export variables
 ```bash
 export WINE_PREFIX=$(pwd)/wine_prefix
@@ -337,8 +412,10 @@ cp /usr/share/playtron/pact.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
 # This is copying the pact.dll to your wine prefix.
 # This will already be done for you when executing the app via GameOS.
 ```
-- `LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ~/node-v22.16.0-win-x64/node.exe ./index`
-    - In a live app, the `LD_LIBRARY_PATH` variables will be provided when executing the app.
+- Run (In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app):
+```bash
+LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ~/node-v22.16.0-win-x64/node.exe ./index
+```
 
 ---
 

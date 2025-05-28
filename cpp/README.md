@@ -74,23 +74,35 @@ IMPORTANT 2: The wallet UI to approve/reject transactions might not be released 
 
 #### Linux
 
-- `export IP_ADDRESS=DEVICE_IP`
-    - `DEVICE_IP` above represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address
-- `make examples-attestation-linux-x64`
-- `scp -r ./build/linux-x64/bin/* playtron@$IP_ADDRESS:/home/playtron/cpp-linux`
-- `ssh playtron@$IP_ADDRESS`
-- `cd cpp-linux`
-- `PACT_ATTESTATION_URL=https://pact.playtron.one LD_LIBRARY_PATH=.:/usr/lib64 ./attestation`
-    - In a live app, the `PACT_ATTESTATION_URL` and `LD_LIBRARY_PATH` variables will be provided when executing the app.
+- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
+```bash
+export IP_ADDRESS=DEVICE_IP
+```
+- Build, copy files to device and SSH into device:
+```bash
+make examples-attestation-linux-x64
+scp -r ./build/linux-x64/bin/* playtron@$IP_ADDRESS:/home/playtron/cpp-linux
+ssh playtron@$IP_ADDRESS
+cd cpp-linux
+```
+- Run (In a live app, the `PACT_ATTESTATION_URL` and `LD_LIBRARY_PATH` variables will be provided when executing the app):
+```bash
+PACT_ATTESTATION_URL=https://pact.playtron.one LD_LIBRARY_PATH=.:/usr/lib64 ./attestation
+```
 
 #### Windows
 
-- `export IP_ADDRESS=DEVICE_IP`
-    - `DEVICE_IP` above represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address
-- `make examples-attestation-win-x64`
-- `scp -r ./build/win-x64/bin/* playtron@$IP_ADDRESS:/home/playtron/cpp-win`
-- `ssh playtron@$IP_ADDRESS`
-- `cd cpp-win`
+- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
+```bash
+export IP_ADDRESS=DEVICE_IP
+```
+- Build, copy files to device and SSH into device:
+```bash
+make examples-attestation-win-x64
+scp -r ./build/win-x64/bin/* playtron@$IP_ADDRESS:/home/playtron/cpp-win
+ssh playtron@$IP_ADDRESS
+cd cpp-win
+```
 - Export variables
 ```bash
 export WINE_PREFIX=$(pwd)/wine_prefix
@@ -115,30 +127,44 @@ cp /usr/share/playtron/pact.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
 # This is copying the pact.dll to your wine prefix.
 # This will already be done for you when executing the app via GameOS.
 ```
-- `PACT_ATTESTATION_URL=https://pact.playtron.one LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ./attestation.exe`
-    - In a live app, the `PACT_ATTESTATION_URL` and `LD_LIBRARY_PATH` variables will be provided when executing the app.
+- Run (In a live app, the `PACT_ATTESTATION_URL` and `LD_LIBRARY_PATH` variables will be provided when executing the app):
+```bash
+PACT_ATTESTATION_URL=https://pact.playtron.one LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ./attestation.exe
+```
 
 ### Web3
 
 #### Linux
 
-- `export IP_ADDRESS=DEVICE_IP`
-    - `DEVICE_IP` above represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address
-- `make examples-web3-linux-x64`
-- `scp -r ./build/linux-x64/bin/* playtron@$IP_ADDRESS:/home/playtron/cpp-linux`
-- `ssh playtron@$IP_ADDRESS`
-- `cd cpp-linux`
-- `LD_LIBRARY_PATH=.:/usr/lib64 ./web3`
-    - In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app.
+- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
+```bash
+export IP_ADDRESS=DEVICE_IP
+```
+- Build, copy files to device and SSH into device:
+```bash
+make examples-web3-linux-x64
+scp -r ./build/linux-x64/bin/* playtron@$IP_ADDRESS:/home/playtron/cpp-linux
+ssh playtron@$IP_ADDRESS
+cd cpp-linux
+```
+- Run (In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app):
+```bash
+LD_LIBRARY_PATH=.:/usr/lib64 ./web3
+```
 
 #### Windows
 
-- `export IP_ADDRESS=DEVICE_IP`
-    - `DEVICE_IP` above represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address
-- `make examples-web3-win-x64`
-- `scp -r ./build/win-x64/bin/* playtron@$IP_ADDRESS:/home/playtron/cpp-win`
-- `ssh playtron@$IP_ADDRESS`
-- `cd cpp-win`
+- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
+```bash
+export IP_ADDRESS=DEVICE_IP
+```
+- Build, copy files to device and SSH into device:
+```bash
+make examples-web3-win-x64
+scp -r ./build/win-x64/bin/* playtron@$IP_ADDRESS:/home/playtron/cpp-win
+ssh playtron@$IP_ADDRESS
+cd cpp-win
+```
 - Export variables
 ```bash
 export WINE_PREFIX=$(pwd)/wine_prefix
@@ -163,8 +189,10 @@ cp /usr/share/playtron/pact.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
 # This is copying the pact.dll to your wine prefix.
 # This will already be done for you when executing the app via GameOS.
 ```
-- `LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ./web3.exe`
-    - In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app.
+- Run (In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app):
+```bash
+LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ./web3.exe
+```
 
 ---
 
