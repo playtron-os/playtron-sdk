@@ -9,17 +9,9 @@ This SDK supports both **Linux** and **Windows (via Wine/Proton)** and includes 
 - [Features](#features)
 - [Requirements for Examples](#requirements-for-examples)
 - [SDK Installation](#sdk-installation)
-- [Examples](#examples)
-  - [PACT Attestation](#attestation)
-  - [Sui](#sui)
 - [Building and Testing Examples](#building-and-testing-examples)
-  - [PACT Attestation - Linux](#linux-1)
-  - [PACT Attestation - Windows](#windows-1)
-  - [Sui - Linux](#linux-2)
-  - [Sui - Windows](#windows-2)
-- [API Reference](#-api-reference)
-- [Exceptions](#-exceptions)
-- [License](#license)
+- [API Reference](#🧩-api-reference)
+- [Exceptions](#⚠-exceptions)
 
 ---
 
@@ -27,6 +19,7 @@ This SDK supports both **Linux** and **Windows (via Wine/Proton)** and includes 
 
 - Remote PACT attestation via TPM
 - Message signing and transaction execution
+- Virtual Keyboard/Browser utilities
 - Cross-platform support (Linux + Wine/Proton on Windows)
 - Clean, minimal examples in C++
 
@@ -46,9 +39,10 @@ This SDK supports both **Linux** and **Windows (via Wine/Proton)** and includes 
 
 ---
 
+
 ## SDK Installation
 
-To use the SDK, follow these steps:
+Include the SDK library in your build process:
 
 ### Linux
 
@@ -63,136 +57,64 @@ To use the SDK, follow these steps:
 
 ---
 
+
 ## Building and Testing Examples
 
-All examples will only function properly in GameOS where the libraries and dlls are provided.
+> 🛠️ Requires GameOS Beta 1.1+. Wallet UI for Sui may not be released in Beta 1.1.
 
-IMPORTANT: These examples will only work on GameOS Beta 1.1 version and up!
-IMPORTANT 2: The wallet UI to approve/reject transactions might not be released with Beta 1.1 and come with a later version, thus making sui examples not fully testable.
+### Common Steps
 
-### PACT Attestation
+#### 1. Export IP Address
 
-#### Linux
-
-- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
 ```bash
-export IP_ADDRESS=DEVICE_IP
+export IP_ADDRESS=DEVICE_IP  # Find in Settings → Internet → Wi-Fi → IP Address
 ```
-- Build, copy files to device and SSH into device:
+
+#### 2. Build and Transfer Files
+
+Replace `<example>` and `<platform>` with your desired target:
+
+Examples available: `attestation` | `manager` | `sui`
+Platforms available: `linux-x64` | `win-x64`
+
 ```bash
-make examples-attestation-linux-x64
-scp -r ./build/linux-x64/bin/* playtron@$IP_ADDRESS:/home/playtron/cpp-linux
+make examples-<example>-<platform>
+scp -r ./build/<platform>/bin/* playtron@$IP_ADDRESS:/home/playtron/cpp-<platform>
 ssh playtron@$IP_ADDRESS
-cd cpp-linux
-```
-- Run (In a live app, the `PACT_ATTESTATION_URL` and `LD_LIBRARY_PATH` variables will be provided when executing the app):
-```bash
-PACT_ATTESTATION_URL=https://pact.playtron.one LD_LIBRARY_PATH=.:/usr/lib64 ./attestation
+cd cpp-<platform>
 ```
 
-#### Windows
+#### 3. Environment Setup for Windows (only)
 
-- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
-```bash
-export IP_ADDRESS=DEVICE_IP
-```
-- Build, copy files to device and SSH into device:
-```bash
-make examples-attestation-win-x64
-scp -r ./build/win-x64/bin/* playtron@$IP_ADDRESS:/home/playtron/cpp-win
-ssh playtron@$IP_ADDRESS
-cd cpp-win
-```
-- Export variables
 ```bash
 export WINE_PREFIX=$(pwd)/wine_prefix
 export STEAM_COMPAT_DATA_PATH=$WINE_PREFIX
-export STEAM_COMPAT_PATH=~/.local/share/Steam && export STEAM_COMPAT_CLIENT_INSTALL_PATH=~/.local/share/Steam
-```
-- Create prefix folder
-```bash
+export STEAM_COMPAT_PATH=~/.local/share/Steam
+export STEAM_COMPAT_CLIENT_INSTALL_PATH=~/.local/share/Steam
+
 mkdir -p $WINE_PREFIX
-ls ~/.local/share/playtron/tools/proton
-# Look at the output of this command and take note of the installed proton versions, as it will be used in the next step
-# Let's assume we have `proton-ge-9-27` installed for the next steps
-```
-- Initialize prefix
-```bash
+ls ~/.local/share/playtron/tools/proton  # Check installed versions
+
+# Replace with your installed version:
 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton run cmd.exe /c exit
-# This initializes the windows wine prefix directory in which the example will execute
+
+# Copy required DLLs:
+cp /usr/lib64/libplaytron.so $WINE_PREFIX/pfx/drive_c/windows/system32/
 cp /usr/share/playtron/playtron.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
-# This is copying the playtron.dll to your wine prefix.
-# This will already be done for you when executing the app via GameOS.
-cp /usr/share/playtron/pact.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
-# This is copying the pact.dll to your wine prefix.
-# This will already be done for you when executing the app via GameOS.
-```
-- Run (In a live app, the `PACT_ATTESTATION_URL` and `LD_LIBRARY_PATH` variables will be provided when executing the app):
-```bash
-PACT_ATTESTATION_URL=https://pact.playtron.one LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ./attestation.exe
 ```
 
-### Sui
+### Run Commands
 
-#### Linux
+(For Windows, see [Environment Setup for Windows](#3-environment-setup-for-windows-only))
 
-- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
-```bash
-export IP_ADDRESS=DEVICE_IP
-```
-- Build, copy files to device and SSH into device:
-```bash
-make examples-sui-linux-x64
-scp -r ./build/linux-x64/bin/* playtron@$IP_ADDRESS:/home/playtron/cpp-linux
-ssh playtron@$IP_ADDRESS
-cd cpp-linux
-```
-- Run (In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app):
-```bash
-LD_LIBRARY_PATH=.:/usr/lib64 ./sui
-```
-
-#### Windows
-
-- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
-```bash
-export IP_ADDRESS=DEVICE_IP
-```
-- Build, copy files to device and SSH into device:
-```bash
-make examples-sui-win-x64
-scp -r ./build/win-x64/bin/* playtron@$IP_ADDRESS:/home/playtron/cpp-win
-ssh playtron@$IP_ADDRESS
-cd cpp-win
-```
-- Export variables
-```bash
-export WINE_PREFIX=$(pwd)/wine_prefix
-export STEAM_COMPAT_DATA_PATH=$WINE_PREFIX
-export STEAM_COMPAT_PATH=~/.local/share/Steam && export STEAM_COMPAT_CLIENT_INSTALL_PATH=~/.local/share/Steam
-```
-- Create prefix folder
-```bash
-mkdir -p $WINE_PREFIX
-ls ~/.local/share/playtron/tools/proton
-# Look at the output of this command and take note of the installed proton versions, as it will be used in the next step
-# Let's assume we have `proton-ge-9-27` installed for the next steps
-```
-- Initialize prefix
-```bash
-~/.local/share/playtron/tools/proton/proton-ge-9-27/proton run cmd.exe /c exit
-# This initializes the windows wine prefix directory in which the example will execute
-cp /usr/share/playtron/playtron.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
-# This is copying the playtron.dll to your wine prefix.
-# This will already be done for you when executing the app via GameOS.
-cp /usr/share/playtron/pact.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
-# This is copying the pact.dll to your wine prefix.
-# This will already be done for you when executing the app via GameOS.
-```
-- Run (In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app):
-```bash
-LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ./sui.exe
-```
+| Example     | Platform | Run Command                                                                                     |
+|-------------|----------|--------------------------------------------------------------------------------------------------|
+| Attestation | Linux    | `PACT_ATTESTATION_URL=https://pact.playtron.one LD_LIBRARY_PATH=.:/usr/lib64 ./attestation`     |
+| Attestation | Windows  | `PACT_ATTESTATION_URL=https://pact.playtron.one LD_LIBRARY_PATH=.:/usr/lib64 proton runinprefix ./attestation.exe` |
+| Sui         | Linux    | `LD_LIBRARY_PATH=.:/usr/lib64 ./sui`                                                             |
+| Sui         | Windows  | `LD_LIBRARY_PATH=.:/usr/lib64 proton runinprefix ./sui.exe`                                      |
+| Manager     | Linux    | `LD_LIBRARY_PATH=.:/usr/lib64 ./manager`                                                         |
+| Manager     | Windows  | `LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ./manager.exe`                                  |
 
 ---
 
@@ -202,7 +124,7 @@ The Playtron C++ SDK provides convenient access to core GameOS platform services
 
 ---
 
-### 🔍 `playtron::sdk::os`
+### `playtron::sdk::os`
 
 #### `bool is_playtron()`
 
@@ -269,12 +191,12 @@ std::cout << "User wallet address: " << address << std::endl;
 
 ---
 
-#### `MessageResult sign_message(const std::string& providerAppId, const std::string& msg)`
+#### `SignResult sign_message(const std::string& providerAppId, const std::string& msg)`
 
 Requests the user to sign an arbitrary message through the Playtron wallet UI.
 
 ```cpp
-playtron::sdk::sui::MessageResult result =
+playtron::sdk::sui::SignResult result =
     playtron::sdk::sui::sign_message("123", "Hello from my game!");
 
 if (result.cancelled) {
@@ -308,7 +230,76 @@ if (tx.cancelled) {
 
 ---
 
-### ⚠# Exceptions
+#### `SignResult sign_transaction(const std::string& providerAppId, const std::string& txBytes)`
+
+Requests the user to sign a transaction to be executed in-game.
+
+```cpp
+playtron::sdk::sui::SignResult result =
+    playtron::sdk::sui::sign_transaction("123", base64_tx);
+
+if (result.cancelled) {
+    std::cerr << "User cancelled signing." << std::endl;
+} else if (!result.error.empty()) {
+    std::cerr << "Error signing: " << result.error << std::endl;
+} else {
+    std::cout << "Signed tx: " << result.signature << std::endl;
+}
+```
+
+---
+
+### `playtron::sdk::manager`
+
+#### `void show_keyboard()`
+
+Requests to show the in-game virtual keyboard in GameOS.
+
+```cpp
+#include <playtron/sdk/manager.hxx>
+
+playtron::sdk::manager::show_keyboard();
+```
+
+---
+
+#### `void hide_keyboard()`
+
+Requests to hide the in-game virtual keyboard in GameOS.
+
+```cpp
+#include <playtron/sdk/manager.hxx>
+
+playtron::sdk::manager::hide_keyboard();
+```
+
+---
+
+#### `void open_browser(const std::string& url)`
+
+Requests to open the browser and navigate to a specified URL in GameOS.
+
+```cpp
+#include <playtron/sdk/manager.hxx>
+
+playtron::sdk::manager::open_browser("https://google.com");
+```
+
+---
+
+#### `void close_browser()`
+
+Requests to close the browser in GameOS.
+
+```cpp
+#include <playtron/sdk/manager.hxx>
+
+playtron::sdk::manager::close_browser();
+```
+
+---
+
+### ⚠ Exceptions
 
 - **`UninitializedException`**: Thrown when the SDK is used without proper initialization, or outside a Playtron environment.
 - **`AttestationException`**: Thrown during failures in the attestation flow.
