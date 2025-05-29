@@ -7,27 +7,24 @@ This SDK is designed for **Node.js apps running on GameOS** and includes TypeScr
 ## Table of Contents
 
 1. [Playtron GameOS Node.js SDK](#playtron-gameos-nodejs-sdk)
-2. [Features](#features)
-3. [Requirements](#requirements)
-4. [Installation](#installation)
-5. [Building and Testing Examples](#building-and-testing-examples)
-    - [PACT Attestation](#attestation)
-        - [Linux](#linux)
-        - [Windows](#windows)
-    - [Sui Address](#sui-address)
-        - [Linux](#linux-1)
-        - [Windows](#windows-1)
-    - [Sui Sign Message](#sui-sign-message)
-        - [Linux](#linux-2)
-        - [Windows](#windows-2)
-    - [Sui Sign and Execute Transaction](#sui-sign-and-execute-transaction)
-        - [Linux](#linux-3)
-        - [Windows](#windows-3)
-6. [API Reference](#api-reference)
-    - [class OS](#class-os)
-    - [class AttestationClient](#class-attestationclient)
-    - [class Sui](#class-sui)
-7. [Types](#types)
+2. [📦 Features](#📦-features)
+3. [💻 Requirements](#💻-requirements)
+4. [🚀 Installation](#🚀-installation)
+5. [🧪 Building and Testing Examples](#🧪-building-and-testing-examples)  
+   - [🔧 Download NodeJS](#🔧-download-nodejs)  
+     - [Linux](#linux)  
+     - [Windows](#windows)  
+   - [🔧 Common Setup](#🔧-common-setup)  
+   - [🪟 Windows Proton Environment Setup](#🪟-windows-proton-environment-setup)  
+   - [🧪 Running Examples](#🧪-running-examples)  
+     - [Run (Linux)](#run-linux)  
+     - [Run (Windows)](#run-windows)
+6. [📚 API Reference](#📚-api-reference)  
+   - [`class OS`](#class-os)  
+   - [`class AttestationClient`](#class-attestationclient)  
+   - [`class Sui`](#class-sui)  
+   - [`class Manager`](#class-manager)
+7. [🧾 Types](#🧾-types)
 
 ---
 
@@ -68,7 +65,7 @@ npm install @playtron/sdk
 - Download the linux node standalone binary from here: https://nodejs.org/dist/v22.16.0/node-v22.16.0-linux-x64.tar.xz
 - Unzip into ~/Downloads directory
 
-### Windows
+#### Windows
 
 - Download the windows node zip from here: https://nodejs.org/dist/v22.16.0/node-v22.16.0-win-x64.zip
 - Unzip into ~/Downloads directory
@@ -81,7 +78,7 @@ Examples available: `attestation` | `browser` | `is-playtron` | `sui-address` | 
 Platforms available: `linux-x64` | `win-x64`
 
 ```bash
-export IP_ADDRESS=DEVICE_IP
+export IP_ADDRESS=DEVICE_IP  # Find in Settings → Internet → Wi-Fi → IP Address
 cd ./examples
 pnpm install
 BUILD_FILE=<example> pnpm build
@@ -105,7 +102,7 @@ cp /usr/share/playtron/playtron.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
 cp /usr/share/playtron/pact.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
 ```
 
-### 🧪 Example Template
+### 🧪 Running Examples
 
 #### Run (Linux)
 ```bash
@@ -114,8 +111,7 @@ LD_LIBRARY_PATH=.:/usr/lib64 ~/node-v22-linux-x64/bin/node ./index
 
 #### Run (Windows)
 ```bash
-LD_LIBRARY_PATH=.:/usr/lib64 \
-~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ~/node-v22-win-x64/node.exe ./index
+LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ~/node-v22-win-x64/node.exe ./index
 ```
 
 ---
@@ -199,5 +195,3 @@ type SessionInfo = {
   sessionId: string;
 }
 ```
-
----

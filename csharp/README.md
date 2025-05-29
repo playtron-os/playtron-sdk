@@ -4,6 +4,33 @@ Welcome to the official **Playtron GameOS C# SDK** — a .NET interface for buil
 
 This SDK supports **Linux** and **Windows (via Wine/Proton)**, with full examples for PACT attestation, Sui signing, and more.
 
+## Table of Contents
+
+1. [Playtron GameOS C# SDK](#playtron-gameos-c-sdk)
+2. [📦 Features](#📦-features)
+3. [💻 Requirements](#💻-requirements)
+   - [Linux](#linux)
+   - [Windows](#windows)
+4. [🚀 Installation](#🚀-installation)
+5. [🧪 Building and Running Examples](#🧪-building-and-running-examples)
+   - [🔧 Common Setup](#🔧-common-setup)
+   - [🪟 Windows Proton Environment Setup](#🪟-windows-proton-environment-setup)
+   - [🔐 Attestation Example](#🔐-attestation-example)
+     - [Linux](#linux-1)
+     - [Windows](#windows-1)
+   - [🌐 Sui Example](#🌐-sui-example)
+     - [Linux](#linux-2)
+     - [Windows](#windows-2)
+   - [🧰 Manager Example](#🧰-manager-example)
+     - [Linux](#linux-3)
+     - [Windows](#windows-3)
+6. [🧩 API Reference (C#)](#🧩-api-reference-c)
+   - [`Playtron.SDK.OS`](#playtronsdkos)
+   - [`Playtron.SDK.PACT.AttestationClient`](#playtronsdkpactattestationclient)
+   - [`Playtron.SDK.Sui`](#playtronsdksui)
+   - [`Playtron.SDK.Manager`](#playtronsdkmanager)
+7. [⚠ Exceptions](#⚠-exceptions)
+
 ---
 
 ## 📦 Features
@@ -51,7 +78,7 @@ Examples available: `Attestation` | `Manager` | `Sui`
 Platforms available: `linux-x64` | `win-x64`
 
 ```bash
-export IP_ADDRESS=DEVICE_IP
+export IP_ADDRESS=DEVICE_IP  # Find in Settings → Internet → Wi-Fi → IP Address
 cd Examples/<example>
 dotnet build --runtime <platform> -c Release --self-contained true
 scp -r ./bin/Release/net8.0/<platform>/* playtron@$IP_ADDRESS:/home/playtron/csharp-<platform>

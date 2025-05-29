@@ -6,12 +6,25 @@ This SDK supports both **Linux** and **Windows (via Wine/Proton)** and includes 
 
 ## Table of Contents
 
-- [Features](#features)
-- [Requirements for Examples](#requirements-for-examples)
-- [SDK Installation](#sdk-installation)
-- [Building and Testing Examples](#building-and-testing-examples)
-- [API Reference](#🧩-api-reference)
-- [Exceptions](#⚠-exceptions)
+1. [Playtron GameOS C++ SDK](#playtron-gameos-c-sdk)
+2. [Features](#features)
+3. [Requirements](#requirements)
+   - [Linux](#linux)
+   - [Windows (Cross-compilation from Linux)](#windows-cross-compilation-from-linux)
+4. [SDK Installation](#sdk-installation)
+   - [Linux](#linux-1)
+   - [Windows](#windows)
+5. [Building and Testing Examples](#building-and-testing-examples)
+   - [Common Steps](#common-steps)
+   - [Run Commands](#run-commands)
+6. [🧩 API Reference](#🧩-api-reference)
+   - [`playtron::sdk::os`](#playtronsdkos)
+   - [`playtron::sdk::pact`](#playtronsdkpact)
+     - [`AttestationClient`](#class-attestationclient)
+   - [`playtron::sdk::sui`](#playtronsdksui)
+   - [`playtron::sdk::manager`](#playtronsdkmanager)
+7. [⚠ Exceptions](#⚠-exceptions)
+
 
 ---
 
