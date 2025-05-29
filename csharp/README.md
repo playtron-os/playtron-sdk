@@ -143,13 +143,13 @@ Returns TPM quote for server submission.
 #### `string GetWalletAddress()`
 Returns the user’s wallet address.
 
-#### `MessageResult SignMessage(string providerAppId, string message)`
+#### `SignResult SignMessage(string providerAppId, string message)`
 Asks the user to sign a message.
 
 #### `TransactionResult SignAndExecuteTransaction(string providerAppId, string txBytes)`
 Signs and executes a base64-encoded transaction.
 
-#### `MessageResult SignTransaction(string providerAppId, string txBytes)`
+#### `SignResult SignTransaction(string providerAppId, string txBytes)`
 Signs transaction for in-game use.
 
 ---

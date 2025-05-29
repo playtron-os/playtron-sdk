@@ -31,488 +31,100 @@ This SDK is designed for **Node.js apps running on GameOS** and includes TypeScr
 
 ---
 
-## Features
+## 📦 Features
 
 - TPM-based remote attestation
 - Sui wallet integration for signing and executing transactions
+- Virtual Keyboard/Browser utilities
 - Detect if running on GameOS
 - Native bindings via ffi-rs
 - TypeScript support
 
 ---
 
-## Requirements
+## 💻 Requirements
 
 - Node.js 18+
 - GameOS Beta 1.1+ (provides required native libraries)
 
 ---
 
-## Installation
+## 🚀 Installation
 
-1. Install SDK:
 ```bash
 npm install @playtron/sdk
 ```
 
 ---
 
-## Building and Testing Examples
+## 🧪 Building and Testing Examples
 
-All examples will only function properly in GameOS where the libraries and dlls are provided.
+> 🛠️ Requires GameOS Beta 1.1+. Some Sui wallet functions may not be available until later releases.
 
-IMPORTANT: These examples will only work on GameOS Beta 1.1 version and up!
-IMPORTANT 2: The wallet UI to approve/reject transactions might not be released with Beta 1.1 and come with a later version, thus making sui examples not fully testable.
-
-### Attestation
+### 🔧 Download NodeJS
 
 #### Linux
 
-- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
-```bash
-export IP_ADDRESS=DEVICE_IP
-```
-- Build the example:
-```bash
-cd ./examples
-pnpm install
-BUILD_FILE=attestation pnpm build
-```
-- Copy built code to device:
-```bash
-scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-linux
-```
-- Download the linux node standalone binary from here: https://nodejs.org/en/download
-- Copy the node binary to the target device:
-```bash
-scp -r ~/Downloads/node-v22.16.0-linux-x64/bin/node playtron@$IP_ADDRESS:/home/playtron/node
-```
-```bash
-ssh playtron@$IP_ADDRESS
-cd node-linux
-```
-- Run (In a live app, the `PACT_ATTESTATION_URL` and `LD_LIBRARY_PATH` variables will be provided when executing the app):
-```bash
-PACT_ATTESTATION_URL=https://pact.playtron.one LD_LIBRARY_PATH=.:/usr/lib64 ~/node ./index
-```
+- Download the linux node standalone binary from here: https://nodejs.org/dist/v22.16.0/node-v22.16.0-linux-x64.tar.xz
+- Unzip into ~/Downloads directory
 
-#### Windows
+### Windows
 
-- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
-```bash
-export IP_ADDRESS=DEVICE_IP
-```
-- Build the example:
-```bash
-cd ./examples
-pnpm install
-BUILD_FILE=attestation pnpm build
-```
-- Copy built code to device:
-```bash
-scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-win
-```
 - Download the windows node zip from here: https://nodejs.org/dist/v22.16.0/node-v22.16.0-win-x64.zip
-- Copy the node zip to the target device:
+- Unzip into ~/Downloads directory
+
+### 🔧 Common Setup
+
+Replace `<example>` and `<platform>` with your desired target:
+
+Examples available: `attestation` | `browser` | `is-playtron` | `sui-address` | `sui-sign-and-execute-transaction` | `sui-sign-message` | `sui-sign-transaction` | `virtual-keyboard`
+Platforms available: `linux-x64` | `win-x64`
+
 ```bash
-scp -r ~/Downloads/node-v22.16.0-win-x64.zip playtron@$IP_ADDRESS:/home/playtron
-```
-- Ssh into the device and unzip node:
-```bash
+export IP_ADDRESS=DEVICE_IP
+cd ./examples
+pnpm install
+BUILD_FILE=<example> pnpm build
+scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-<platform>
+scp -r ~/Downloads/node-v22.16.0-<platform>/* playtron@$IP_ADDRESS:/home/playtron/node-v22-<platform>
 ssh playtron@$IP_ADDRESS
-unzip node-v22.16.0-win-x64.zip
-cd node-win
+cd node-<platform>
 ```
-- Export variables
+
+### 🪟 Windows Proton Environment Setup
+
 ```bash
 export WINE_PREFIX=$(pwd)/wine_prefix
 export STEAM_COMPAT_DATA_PATH=$WINE_PREFIX
-export STEAM_COMPAT_PATH=~/.local/share/Steam && export STEAM_COMPAT_CLIENT_INSTALL_PATH=~/.local/share/Steam
-```
-- Create prefix folder
-```bash
+export STEAM_COMPAT_PATH=~/.local/share/Steam
+export STEAM_COMPAT_CLIENT_INSTALL_PATH=~/.local/share/Steam
+
 mkdir -p $WINE_PREFIX
-ls ~/.local/share/playtron/tools/proton
-# Look at the output of this command and take note of the installed proton versions, as it will be used in the next step
-# Let's assume we have `proton-ge-9-27` installed for the next steps
-```
-- Initialize prefix
-```bash
 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton run cmd.exe /c exit
-# This initializes the windows wine prefix directory in which the example will execute
 cp /usr/share/playtron/playtron.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
-# This is copying the playtron.dll to your wine prefix.
-# This will already be done for you when executing the app via GameOS.
 cp /usr/share/playtron/pact.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
-# This is copying the pact.dll to your wine prefix.
-# This will already be done for you when executing the app via GameOS.
-```
-- Run (In a live app, the `PACT_ATTESTATION_URL` and `LD_LIBRARY_PATH` variables will be provided when executing the app):
-```bash
-PACT_ATTESTATION_URL=https://pact.playtron.one LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ~/node-v22.16.0-win-x64/node.exe ./index
 ```
 
-### Sui Address
+### 🧪 Example Template
 
-#### Linux
-
-- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
+#### Run (Linux)
 ```bash
-export IP_ADDRESS=DEVICE_IP
-```
-- Build the example:
-```bash
-cd ./examples
-pnpm install
-BUILD_FILE=sui-address pnpm build
-```
-- Copy built code to device:
-```bash
-scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-linux
-```
-- Download the linux node standalone binary from here: https://nodejs.org/en/download
-- Copy the node binary to the target device:
-```bash
-scp -r ~/Downloads/node-v22.16.0-linux-x64/bin/node playtron@$IP_ADDRESS:/home/playtron/node
-```
-```bash
-ssh playtron@$IP_ADDRESS
-cd node-linux
-```
-- Run (In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app.):
-```bash
-LD_LIBRARY_PATH=.:/usr/lib64 ~/node ./index
+LD_LIBRARY_PATH=.:/usr/lib64 ~/node-v22-linux-x64/bin/node ./index
 ```
 
-#### Windows
-
-- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
+#### Run (Windows)
 ```bash
-export IP_ADDRESS=DEVICE_IP
-```
-- Build the example:
-```bash
-cd ./examples
-pnpm install
-BUILD_FILE=sui-address pnpm build
-```
-- Copy built code to device:
-```bash
-scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-win
-```
-- Download the windows node zip from here: https://nodejs.org/dist/v22.16.0/node-v22.16.0-win-x64.zip
-- Copy the node zip to the target device:
-```bash
-scp -r ~/Downloads/node-v22.16.0-win-x64.zip playtron@$IP_ADDRESS:/home/playtron
-```
-- Ssh into the device and unzip node:
-```bash
-ssh playtron@$IP_ADDRESS
-unzip node-v22.16.0-win-x64.zip
-cd node-win
-```
-- Export variables
-```bash
-export WINE_PREFIX=$(pwd)/wine_prefix
-export STEAM_COMPAT_DATA_PATH=$WINE_PREFIX
-export STEAM_COMPAT_PATH=~/.local/share/Steam && export STEAM_COMPAT_CLIENT_INSTALL_PATH=~/.local/share/Steam
-```
-- Create prefix folder
-```bash
-mkdir -p $WINE_PREFIX
-ls ~/.local/share/playtron/tools/proton
-# Look at the output of this command and take note of the installed proton versions, as it will be used in the next step
-# Let's assume we have `proton-ge-9-27` installed for the next steps
-```
-- Initialize prefix
-```bash
-~/.local/share/playtron/tools/proton/proton-ge-9-27/proton run cmd.exe /c exit
-# This initializes the windows wine prefix directory in which the example will execute
-cp /usr/share/playtron/playtron.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
-# This is copying the playtron.dll to your wine prefix.
-# This will already be done for you when executing the app via GameOS.
-cp /usr/share/playtron/pact.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
-# This is copying the pact.dll to your wine prefix.
-# This will already be done for you when executing the app via GameOS.
-```
-- Run (In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app):
-```bash
-LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ~/node-v22.16.0-win-x64/node.exe ./index
-```
-
-### Sui Sign Message
-
-#### Linux
-
-- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
-```bash
-export IP_ADDRESS=DEVICE_IP
-```
-- Build the example:
-```bash
-cd ./examples
-pnpm install
-BUILD_FILE=sui-sign-message pnpm build
-```
-- Copy built code to device:
-```bash
-scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-linux
-```
-- Download the linux node standalone binary from here: https://nodejs.org/en/download
-- Copy the node binary to the target device:
-```bash
-scp -r ~/Downloads/node-v22.16.0-linux-x64/bin/node playtron@$IP_ADDRESS:/home/playtron/node
-```
-- Ssh into the device:
-```bash
-ssh playtron@$IP_ADDRESS
-cd node-linux
-```
-- Run (In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app.):
-```bash
-LD_LIBRARY_PATH=.:/usr/lib64 ~/node ./index
-```
-
-#### Windows
-
-- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
-```bash
-export IP_ADDRESS=DEVICE_IP
-```
-- Build the example:
-```bash
-cd ./examples
-pnpm install
-BUILD_FILE=sui-sign-message pnpm build
-```
-- Copy built code to device:
-```bash
-scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-win
-```
-- Download the windows node zip from here: https://nodejs.org/dist/v22.16.0/node-v22.16.0-win-x64.zip
-- Copy the node zip to the target device:
-```bash
-scp -r ~/Downloads/node-v22.16.0-win-x64.zip playtron@$IP_ADDRESS:/home/playtron
-```
-- Ssh into the device and unzip node:
-```bash
-ssh playtron@$IP_ADDRESS
-unzip node-v22.16.0-win-x64.zip
-cd node-win
-```
-- Export variables
-```bash
-export WINE_PREFIX=$(pwd)/wine_prefix
-export STEAM_COMPAT_DATA_PATH=$WINE_PREFIX
-export STEAM_COMPAT_PATH=~/.local/share/Steam && export STEAM_COMPAT_CLIENT_INSTALL_PATH=~/.local/share/Steam
-```
-- Create prefix folder
-```bash
-mkdir -p $WINE_PREFIX
-ls ~/.local/share/playtron/tools/proton
-# Look at the output of this command and take note of the installed proton versions, as it will be used in the next step
-# Let's assume we have `proton-ge-9-27` installed for the next steps
-```
-- Initialize prefix
-```bash
-~/.local/share/playtron/tools/proton/proton-ge-9-27/proton run cmd.exe /c exit
-# This initializes the windows wine prefix directory in which the example will execute
-cp /usr/share/playtron/playtron.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
-# This is copying the playtron.dll to your wine prefix.
-# This will already be done for you when executing the app via GameOS.
-cp /usr/share/playtron/pact.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
-# This is copying the pact.dll to your wine prefix.
-# This will already be done for you when executing the app via GameOS.
-```
-- Run (In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app):
-```bash
-LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ~/node-v22.16.0-win-x64/node.exe ./index
-```
-
-### Sui Sign Transaction
-
-#### Linux
-
-- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
-```bash
-export IP_ADDRESS=DEVICE_IP
-```
-- Build the example:
-```bash
-cd ./examples
-pnpm install
-BUILD_FILE=sui-sign-transaction pnpm build
-```
-- Copy built code to device:
-```bash
-scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-linux
-```
-- Download the linux node standalone binary from here: https://nodejs.org/en/download
-- Copy the node binary to the target device:
-```bash
-scp -r ~/Downloads/node-v22.16.0-linux-x64/bin/node playtron@$IP_ADDRESS:/home/playtron/node
-```
-- Ssh into the device:
-```bash
-ssh playtron@$IP_ADDRESS
-cd node-linux
-```
-- Run (In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app.):
-```bash
-LD_LIBRARY_PATH=.:/usr/lib64 ~/node ./index
-```
-
-#### Windows
-
-- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
-```bash
-export IP_ADDRESS=DEVICE_IP
-```
-- Build the example:
-```bash
-cd ./examples
-pnpm install
-BUILD_FILE=sui-sign-transaction pnpm build
-```
-- Copy built code to device:
-```bash
-scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-win
-```
-- Download the windows node zip from here: https://nodejs.org/dist/v22.16.0/node-v22.16.0-win-x64.zip
-- Copy the node zip to the target device:
-```bash
-scp -r ~/Downloads/node-v22.16.0-win-x64.zip playtron@$IP_ADDRESS:/home/playtron
-```
-- Ssh into the device and unzip node:
-```bash
-ssh playtron@$IP_ADDRESS
-unzip node-v22.16.0-win-x64.zip
-cd node-win
-```
-- Export variables
-```bash
-export WINE_PREFIX=$(pwd)/wine_prefix
-export STEAM_COMPAT_DATA_PATH=$WINE_PREFIX
-export STEAM_COMPAT_PATH=~/.local/share/Steam && export STEAM_COMPAT_CLIENT_INSTALL_PATH=~/.local/share/Steam
-```
-- Create prefix folder
-```bash
-mkdir -p $WINE_PREFIX
-ls ~/.local/share/playtron/tools/proton
-# Look at the output of this command and take note of the installed proton versions, as it will be used in the next step
-# Let's assume we have `proton-ge-9-27` installed for the next steps
-```
-- Initialize prefix
-```bash
-~/.local/share/playtron/tools/proton/proton-ge-9-27/proton run cmd.exe /c exit
-# This initializes the windows wine prefix directory in which the example will execute
-cp /usr/share/playtron/playtron.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
-# This is copying the playtron.dll to your wine prefix.
-# This will already be done for you when executing the app via GameOS.
-cp /usr/share/playtron/pact.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
-# This is copying the pact.dll to your wine prefix.
-# This will already be done for you when executing the app via GameOS.
-```
-- Run (In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app):
-```bash
-LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ~/node-v22.16.0-win-x64/node.exe ./index
-```
-
-### Sui Sign and Execute Transaction
-
-#### Linux
-
-- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
-```bash
-export IP_ADDRESS=DEVICE_IP
-```
-- Build the example:
-```bash
-cd ./examples
-pnpm install
-BUILD_FILE=sui-sign-and-execute-transaction pnpm build
-```
-- Copy built code to device:
-```bash
-scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-linux
-```
-- Download the linux node standalone binary from here: https://nodejs.org/en/download
-- Copy the node binary to the target device:
-```bash
-scp -r ~/Downloads/node-v22.16.0-linux-x64/bin/node playtron@$IP_ADDRESS:/home/playtron/node
-```
-```bash
-ssh playtron@$IP_ADDRESS
-cd node-linux
-```
-- Run (In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app.):
-```bash
-LD_LIBRARY_PATH=.:/usr/lib64 ~/node ./index
-```
-
-#### Windows
-
-- Export IP (`DEVICE_IP` below represents the local IP of your device, which can be found in Settings -> Internet -> {wifi connected} -> IP Address):
-```bash
-export IP_ADDRESS=DEVICE_IP
-```
-- Build the example:
-```bash
-cd ./examples
-pnpm install
-BUILD_FILE=sui-sign-and-execute-transaction pnpm build
-```
-- Copy built code to device:
-```bash
-scp -r ./dist/* playtron@$IP_ADDRESS:/home/playtron/node-win
-```
-- Download the windows node zip from here: https://nodejs.org/dist/v22.16.0/node-v22.16.0-win-x64.zip
-- Copy the node zip to the target device:
-```bash
-scp -r ~/Downloads/node-v22.16.0-win-x64.zip playtron@$IP_ADDRESS:/home/playtron
-```
-- Ssh into the device and unzip node:
-```bash
-ssh playtron@$IP_ADDRESS
-unzip node-v22.16.0-win-x64.zip
-cd node-win
-```
-- Export variables
-```bash
-export WINE_PREFIX=$(pwd)/wine_prefix
-export STEAM_COMPAT_DATA_PATH=$WINE_PREFIX
-export STEAM_COMPAT_PATH=~/.local/share/Steam && export STEAM_COMPAT_CLIENT_INSTALL_PATH=~/.local/share/Steam
-```
-- Create prefix folder
-```bash
-mkdir -p $WINE_PREFIX
-ls ~/.local/share/playtron/tools/proton
-# Look at the output of this command and take note of the installed proton versions, as it will be used in the next step
-# Let's assume we have `proton-ge-9-27` installed for the next steps
-```
-- Initialize prefix
-```bash
-~/.local/share/playtron/tools/proton/proton-ge-9-27/proton run cmd.exe /c exit
-# This initializes the windows wine prefix directory in which the example will execute
-cp /usr/share/playtron/playtron.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
-# This is copying the playtron.dll to your wine prefix.
-# This will already be done for you when executing the app via GameOS.
-cp /usr/share/playtron/pact.dll $WINE_PREFIX/pfx/drive_c/windows/system32/
-# This is copying the pact.dll to your wine prefix.
-# This will already be done for you when executing the app via GameOS.
-```
-- Run (In a live app, the `LD_LIBRARY_PATH` variable will be provided when executing the app):
-```bash
-LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ~/node-v22.16.0-win-x64/node.exe ./index
+LD_LIBRARY_PATH=.:/usr/lib64 \
+~/.local/share/playtron/tools/proton/proton-ge-9-27/proton runinprefix ~/node-v22-win-x64/node.exe ./index
 ```
 
 ---
 
-## API Reference
+## 📚 API Reference
 
 ### `class OS`
 
-- `isPlaytron(): Promise<boolean>`  
+- `isPlaytron(): Promise<boolean>`
   Returns `true` if running on GameOS, otherwise `false`.
 
 ---
@@ -539,18 +151,37 @@ LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27
 - `getWalletAddress(): Promise<string>`  
   Returns the wallet address from the user’s Playtron wallet.
 
-- `signMessage(providerAppId: string, message: string): Promise<MessageResult>`  
+- `signMessage(providerAppId: string, message: string): Promise<SignResult>`  
   Signs a message via the wallet UI.
 
 - `signAndExecuteTransaction(providerAppId: string, txBytes: string): Promise<TransactionResult>`  
   Signs and submits a Sui transaction.
 
+- `signTransaction(providerAppId: string, txBytes: string): Promise<SignResult>`  
+  Signs a Sui transaction for in-game execution.
+
 ---
 
-## Types
+### `class Manager`
+
+- `showKeyboard(): Promise<void>`
+  Returns the wallet address from the user’s Playtron wallet.
+
+- `hideKeyboard(): Promise<void>`
+  Signs a message via the wallet UI.
+
+- `openBrowser(url: string): Promise<void>`
+  Open browser to a URL.
+
+- `closeBrowser(): Promise<void>`
+  Close the browser.
+
+---
+
+## 🧾 Types
 
 ```ts
-type MessageResult = {
+type SignResult = {
   error: string;
   cancelled: boolean;
   signature: string;
