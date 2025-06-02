@@ -161,16 +161,16 @@ LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27
 ### `class Manager`
 
 - `showKeyboard(): Promise<void>`
-  Returns the wallet address from the user’s Playtron wallet.
+  Requests the OS to show the virtual in game keyboard.
 
 - `hideKeyboard(): Promise<void>`
-  Signs a message via the wallet UI.
+  Requests the OS to hide the virtual in game keyboard.
 
 - `openBrowser(url: string): Promise<void>`
-  Open browser to a URL.
+  Requests the OS to open browser to a URL.
 
 - `closeBrowser(): Promise<void>`
-  Close the browser.
+  Requests the OS to close the browser.
 
 ---
 
