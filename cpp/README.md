@@ -14,6 +14,7 @@ This SDK supports both **Linux** and **Windows (via Wine/Proton)** and includes 
 4. [SDK Installation](#sdk-installation)
    - [Linux](#linux-1)
    - [Windows](#windows)
+   - [Unreal Engine](#unreal-engine-integration)
 5. [Building and Testing Examples](#building-and-testing-examples)
    - [Common Steps](#common-steps)
    - [Run Commands](#run-commands)
@@ -64,9 +65,76 @@ Include the SDK library in your build process:
 
 ### Windows
 
-- Include the [playtron_sdk.dll.a](./files/win-x64/lib/libplaytron_sdk.dll.a) lib file in your compilation
+- Include the [playtron_sdk.dll.a](./files/win-x64/lib/playtron_sdk.dll.a) lib file in your compilation
 - If compiling manually, then add this to your command `-Ldirectory/to/sdk/file -l:playtron_sdk.dll.a`
-- Ensure [playtron_sdk.dll](./files/win-x64/bin/libplaytron_sdk.dll) is in the same directory as your executable in the final build
+- Ensure [playtron_sdk.dll](./files/win-x64/bin/playtron_sdk.dll) is in the same directory as your executable in the final build
+
+### Unreal Engine Integration
+
+To use the Playtron C++ SDK in a **Unreal Engine 5** project (Windows), follow these steps:
+
+#### File Links
+
+[playtron_sdk.dll](./files/win-x64/bin/playtron_sdk.dll)
+[playtron_sdk.lib](./files/win-x64/lib/playtron_sdk.lib)
+[libcurl.dll](./vendor/curl/bin-win-x64/libcurl.dll)
+[libcurl.lib](./vendor/curl/lib-win-x64/libcurl.lib)
+[zlib1.dll](./vendor/curl/bin-win-x64/zlib1.dll)
+
+#### 1. Add SDK to Your Project
+
+Place the SDK inside your project's `ThirdParty/PlaytronSDK` folder:
+
+```
+<YourProject>/ThirdParty/PlaytronSDK/
+├── include/
+│   └── playtron/...
+├── lib/
+│   ├── playtron_sdk.dll
+│   ├── playtron_sdk.lib
+│   ├── libcurl.dll
+│   ├── libcurl.lib
+│   └── zlib1.dll
+```
+
+#### 2. Update `YourModule.Build.cs`
+
+Modify your module’s `.Build.cs` file to link against the SDK and bundle the required runtime dependencies:
+Note that for the Editor to launch successfully, you might have to copy the .dll files to system32 windows folder or the engine binary folder
+
+```csharp
+string SDKPath = Path.Combine(ModuleDirectory, "../../ThirdParty/PlaytronSDK");
+
+PublicIncludePaths.Add(Path.Combine(SDKPath, "include"));
+
+PublicAdditionalLibraries.Add(Path.Combine(SDKPath, "lib", "playtron_sdk.lib"));
+PublicAdditionalLibraries.Add(Path.Combine(SDKPath, "lib", "libcurl.lib"));
+
+// Bundle required DLLs with packaged project
+RuntimeDependencies.Add(
+    Path.Combine("$(BinaryOutputDir)", "playtron_sdk.dll"),
+    Path.Combine(SDKPath, "lib", "playtron_sdk.dll")
+);
+
+RuntimeDependencies.Add(
+    Path.Combine("$(BinaryOutputDir)", "libcurl.dll"),
+    Path.Combine(SDKPath, "lib", "libcurl.dll")
+);
+
+RuntimeDependencies.Add(
+    Path.Combine("$(BinaryOutputDir)", "zlib1.dll"),
+    Path.Combine(SDKPath, "lib", "zlib1.dll")
+);
+```
+
+### 3. Packaging Notes
+
+Ensure your packaging settings copy all `.dll` files correctly into the final build. If you get errors like *“DLL not found”* or *“Access violation”*, verify:
+
+- DLLs are present in `Binaries/Win64`
+- No processes (e.g., Unreal Editor) are locking the DLLs during packaging
+
+You can use [Process Explorer](https://learn.microsoft.com/en-us/sysinternals/downloads/process-explorer) to check if any process is using the DLL.
 
 ---
 
