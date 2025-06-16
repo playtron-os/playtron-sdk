@@ -85,10 +85,10 @@ int main()
         std::cout << "Response: " << responseBody << std::endl;
 
         curl_easy_cleanup(client);
-    }
-    catch (playtron::sdk::pact::AttestationException& e)
-    {
-        std::cout << "Error: " << e.what() << std::endl;
+    } catch (const std::invalid_argument& e) {
+        std::cerr << "Invalid argument: " << e.what() << std::endl;
+    } catch (const std::runtime_error& e) {
+        std::cerr << "Runtime error: " << e.what() << std::endl;
     }
 
     return 0;

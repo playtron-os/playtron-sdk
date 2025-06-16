@@ -6,8 +6,6 @@
 #include <cstdint>
 #include <string>
 
-#include <curl/curl.h>
-
 namespace playtron { namespace sdk { namespace pact {
     /**
      * Stores the information for a given session.
@@ -25,19 +23,6 @@ namespace playtron { namespace sdk { namespace pact {
     };
 
     /**
-     * Exception for indicating attestation failures.
-     */
-    class PLAYTRONAPI AttestationException : std::exception {
-    public:
-        AttestationException(std::string msg) : m_message(msg)
-        {}
-
-        const char* what() const noexcept override { return m_message.c_str(); }
-    private:
-        std::string m_message;
-    };
-
-    /**
      * Client used for initiating remote attestation sessions
      * and interfacing with the TPM 2.0 chip on the Playtron device.
      */
@@ -45,7 +30,6 @@ namespace playtron { namespace sdk { namespace pact {
     {
     public:
         AttestationClient();
-        ~AttestationClient();
 
         /**
          * Creates the remote attestation session.
@@ -61,9 +45,6 @@ namespace playtron { namespace sdk { namespace pact {
          * PACT attestation server to actually do the remote attestation.
          */
         std::string get_quote(const std::string& nonce);
-    private:
-        CURL* m_client = nullptr;
-        const char* m_pact_base_url;
     };
 }}}
 

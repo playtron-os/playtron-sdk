@@ -133,7 +133,7 @@ LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27
 - `createSession(): Promise<SessionInfo>`  
   Begins a new attestation session. Returns a nonce and session ID.
 
-- `getQuote(nonce: Uint8Array): Promise<string>`  
+- `getQuote(nonce: string): Promise<string>`  
   Generates a TPM quote based on the provided nonce.
 
 #### Exceptions
@@ -191,7 +191,7 @@ type TransactionResult = {
 }
 
 type SessionInfo = {
-  nonce: Uint8Array;
+  nonce: string;
   sessionId: string;
 }
 ```

@@ -251,10 +251,6 @@ std::string quote = client.get_quote(info.nonce);
 // send quote to server
 ```
 
-##### Exception: `AttestationException`
-
-Thrown if the attestation process fails at any stage.
-
 ---
 
 ### `playtron::sdk::sui`
@@ -382,6 +378,6 @@ playtron::sdk::manager::close_browser();
 
 ### ⚠ Exceptions
 
-- **`UninitializedException`**: Thrown when the SDK is used without proper initialization, or outside a Playtron environment.
-- **`AttestationException`**: Thrown during failures in the attestation flow.
+- **`invalid_argument`**: Thrown when the an invalid/empty argument is passed to a function
+- **`runtime_error`**: Thrown when an error happens in the function execution
 ---

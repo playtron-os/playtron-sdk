@@ -160,7 +160,7 @@ Throws `AttestationException` if TPM fails to initialize.
 #### `Task<SessionInfo> CreateSession()`
 Starts attestation session, returns nonce and session ID.
 
-#### `string GetQuote(byte[] nonce)`
+#### `string GetQuote(string nonce)`
 Returns TPM quote for server submission.
 
 ---
@@ -199,5 +199,4 @@ Close the browser.
 
 ## ⚠ Exceptions
 
-- `AttestationException` — attestation or TPM errors
 - `InvalidOperationException` / `ArgumentException` — input validation or null return errors
