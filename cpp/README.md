@@ -340,6 +340,18 @@ playtron::sdk::manager::show_keyboard();
 
 ---
 
+#### `bool is_keyboard_open()`
+
+Checks whether the virtual in-game keyboard is open.
+
+```cpp
+#include <playtron/sdk/manager.hxx>
+
+auto is_open = playtron::sdk::manager::is_keyboard_open();
+```
+
+---
+
 #### `void hide_keyboard()`
 
 Requests to hide the in-game virtual keyboard in GameOS.

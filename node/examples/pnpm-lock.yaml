@@ -12,8 +12,8 @@ importers:
         specifier: ^1.30.1
         version: 1.30.1(typescript@5.8.3)
       '@playtron/sdk':
-        specifier: ^1.0.5
-        version: 1.0.5
+        specifier: ^1.1.1
+        version: 1.1.1
       axios:
         specifier: ^1.9.0
         version: 1.9.0
@@ -257,8 +257,8 @@ packages:
     resolution: {integrity: sha512-jCs9ldd7NwzpgXDIf6P3+NrHh9/sD6CQdxHyjQI+h/6rDNo88ypBxxz45UDuZHz9r3tNz7N/VInSVoVdtXEI4A==}
     engines: {node: ^14.21.3 || >=16}
 
-  '@playtron/sdk@1.0.5':
-    resolution: {integrity: sha512-ZFol7x8JfPkGNedv9C7lDr48TVAm15L7Ew03AYVhnTiKjL/tHuJaH6+vh2NFwOviYgrTU8jgS7cotyX+Y0NHRg==}
+  '@playtron/sdk@1.1.1':
+    resolution: {integrity: sha512-U5paLTOhuRyBYV5FLIPWOEqJpyNd3Po91Rd7+Famg2T4ZtKzFC0LxCFrsHzXPkVn0i7pjPiztYDMW0M/RG0D4Q==}
 
   '@scure/base@1.2.5':
     resolution: {integrity: sha512-9rE6EOVeIQzt5TSu4v+K523F8u6DhBsoZWPGKlnCshhlDhy0kJzUX4V+tr2dWmzF1GdekvThABoEQBGBQI7xZw==}
@@ -673,8 +673,10 @@ snapshots:
 
   '@noble/hashes@1.8.0': {}
 
-  '@playtron/sdk@1.0.5':
+  '@playtron/sdk@1.1.1':
     dependencies:
+      '@yuuang/ffi-rs-darwin-arm64': 1.2.10
+      '@yuuang/ffi-rs-darwin-x64': 1.2.10
       '@yuuang/ffi-rs-linux-x64-gnu': 1.2.10
       '@yuuang/ffi-rs-win32-x64-msvc': 1.2.10
       axios: 1.9.0
@@ -712,11 +714,9 @@ snapshots:
   '@yuuang/ffi-rs-android-arm64@1.2.10':
     optional: true
 
-  '@yuuang/ffi-rs-darwin-arm64@1.2.10':
-    optional: true
+  '@yuuang/ffi-rs-darwin-arm64@1.2.10': {}
 
-  '@yuuang/ffi-rs-darwin-x64@1.2.10':
-    optional: true
+  '@yuuang/ffi-rs-darwin-x64@1.2.10': {}
 
   '@yuuang/ffi-rs-linux-arm-gnueabihf@1.2.10':
     optional: true

@@ -11,6 +11,11 @@ namespace playtron
         namespace manager
         {
             /**
+             * @brief Request to check if in-game virtual keyboard in GameOS is open
+             */
+            PLAYTRONAPI bool is_keyboard_open();
+
+            /**
              * @brief Request opening of in-game virtual keyboard in GameOS
              */
             PLAYTRONAPI void show_keyboard();
@@ -27,7 +32,7 @@ namespace playtron
              *
              * @throws std::invalid_argument if url parameter is empty.
              */
-            PLAYTRONAPI void open_browser(const std::string& url);
+            PLAYTRONAPI void open_browser(const std::string &url);
 
             /**
              * @brief Request closing of GameOS browser

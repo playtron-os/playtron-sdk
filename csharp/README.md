@@ -186,6 +186,9 @@ Signs transaction for in-game use.
 #### `void ShowKeyboard()`
 Show in-game virtual keyboard.
 
+#### `bool IsKeyboardOpen()`
+Checks whether the in-game keyboard is open.
+
 #### `void HideKeyboard()`
 Hide in-game virtual keyboard.
 

@@ -163,6 +163,9 @@ LD_LIBRARY_PATH=.:/usr/lib64 ~/.local/share/playtron/tools/proton/proton-ge-9-27
 - `showKeyboard(): Promise<void>`
   Requests the OS to show the virtual in game keyboard.
 
+- `isKeyboardOpen(): Promise<bool>`
+  Checks whether the in-game keyboard is open.
+
 - `hideKeyboard(): Promise<void>`
   Requests the OS to hide the virtual in game keyboard.
 
